@@ -6,18 +6,18 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     app = express();
 clear();
-console.log(chalk.yellow(figlet.textSync('Cors Proxy', {
+console.log(chalk.yellow(figlet.textSync('Cors-Proxy', {
     horizontalLayout: 'center'
 })));
 
-var myLimit = typeof (process.argv[2]) != 'undefined' ? process.argv[2] : '200kb';
+var myLimit = typeof(process.argv[2]) != 'undefined' ? process.argv[2] : '200kb';
 console.log('Using limit: ', myLimit);
 
 app.use(bodyParser.json({
     limit: myLimit
 }));
 
-app.all('*', function (req, res, next) {
+app.all('*', function(req, res, next) {
 
     // Set CORS headers: allow all origins, methods, and headers: you may want to lock this down in a production environment
     res.header("Access-Control-Allow-Origin", "*");
@@ -46,7 +46,7 @@ app.all('*', function (req, res, next) {
                     'X-DocuSign-Authentication': req.header('X-DocuSign-Authentication')
                 }
             },
-            function (error, response, body) {
+            function(error, response, body) {
                 if (error) {
                     console.error('error: ' + response.statusCode)
                 } else {
@@ -59,7 +59,7 @@ app.all('*', function (req, res, next) {
 
 app.set('port', process.env.PORT || 3000);
 
-app.listen(app.get('port'), function () {
+app.listen(app.get('port'), function() {
     console.log('Server started', new Date());
     console.log('Proxy server listening on port ' + app.get('port'));
 });
